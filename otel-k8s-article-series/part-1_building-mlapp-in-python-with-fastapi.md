@@ -13,7 +13,7 @@ In this blog series, we’ll:
 
 🎯 Goal: show how to fully observe a production-ish ML app from every angle using only open-source tools.
 
-![OTel-k8s](https://github.com/Kartikdudeja/blogs/blob/main/images/OTel-k8s.png)
+![OTel-k8s](https://github.com/Kartikdudeja/blogs/blob/main/images/otel-k8s/OTel-k8s.png)
 
 ---
 ## Part 1: Building a Simple ML App with FastAPI
@@ -51,7 +51,7 @@ pip3 install -r requirements.txt
 
 In this part, we’ll use **Linear Regression**, the "hello world" of ML models. It assumes there’s a straight-line relationship between input and output — in our case, the bigger the house, the higher the price. (Groundbreaking stuff, we know.)
 
-![linear-regression](https://github.com/Kartikdudeja/blogs/blob/main/images/linear-regression.png)
+![linear-regression](https://github.com/Kartikdudeja/blogs/blob/main/images/otel-k8s/linear-regression.png)
 
 Here’s the model training code:
 ```python
