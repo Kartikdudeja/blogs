@@ -150,7 +150,7 @@ Once inside the Grafana UI, follow these steps to add your observability backend
   ```
 * Save & Test
 
-![grafana-datasources-list](https://github.com/Kartikdudeja/blogs/blob/main/images/otel-k8s/grafana-dashboard.png)
+![grafana-datasources-list](https://github.com/Kartikdudeja/blogs/blob/main/images/otel-k8s/grafana-datasources-list.png)
 
 ## 🔍 Explore Logs, Metrics, and Traces
 
