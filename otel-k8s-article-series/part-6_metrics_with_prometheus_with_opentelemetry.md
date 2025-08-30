@@ -237,6 +237,12 @@ In [Part 7](./part-7_logs_with_logi_with_opentelemetry.md), we’ll deploy **Lok
 
 ---
 
+### Missed the previous article?
+
+Check out **[Part 5: Tracing the Lines, Sending Spans from App to Jaeger](./part-5_sending-traces-to-jaeger.md)** to see how we got here.
+
+---
+
 ```json
 {
     "author"   :  "Kartik Dudeja",
