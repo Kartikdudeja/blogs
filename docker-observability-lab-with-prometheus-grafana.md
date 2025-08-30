@@ -1,4 +1,4 @@
-# 🔍 Observability in Minutes: A Docker Lab for Metrics & Alerts
+# Observability in Minutes: A Docker Lab for Metrics & Alerts
 
 > "You can’t manage what you don’t measure — observability is the first step to system improvement."
 
@@ -18,13 +18,13 @@ Let’s get our hands dirty!
 
 ---
 
-## 🧰 What You’ll Need
+## What You’ll Need
 
 * Docker & Docker Compose installed
 * A basic understanding of container networking
 * Some curiosity and \~5 minutes of your time
       
-## 🗂️ The Stack Overview
+## The Stack Overview
 
 Here’s what our stack looks like:
 
@@ -38,7 +38,7 @@ Here’s what our stack looks like:
 
 All components are networked together using Docker’s bridge network (`obs-lab`) and data is persisted via named volumes.
 
-## 📦 The `docker-compose.yml`
+## The `docker-compose.yml`
 
 Here's the full Docker Compose configuration we used for this lab:
 
@@ -139,10 +139,10 @@ This setup launches:
 * Two Node Exporters to simulate monitoring multiple servers.
 * Alertmanager configured to respond to alert rules defined in Prometheus.
 
-> 💡 **Tip**: The `volumes` section ensures your data persists across container restarts.
+> **Tip**: The `volumes` section ensures your data persists across container restarts.
 
 
-## 📁 Folder Structure
+## Folder Structure
 
 To keep things clean, you might want to use the following directory structure:
 
@@ -163,7 +163,7 @@ observability-lab/
 ```
 
 
-## 🔧 Configuration Essentials
+## Configuration Essentials
 
 ### 1. **Prometheus Configuration (`prometheus.yml`)**
 
@@ -240,10 +240,10 @@ receivers:
         to: 'your@email.com'
 ```
 
-> 🔐 Be sure to replace email configs with real credentials or use a webhook/slack integration.
+> Be sure to replace email configs with real credentials or use a webhook/slack integration.
 
 
-## 🚀 Running the Lab
+## Running the Lab
 
 From the root of your project:
 
@@ -269,7 +269,7 @@ Default Grafana login:
 * **Password**: `admin`
 
 
-## 🔔 Triggering Alerts
+## Triggering Alerts
 
 Try stopping one of the Node Exporter containers:
 
@@ -280,7 +280,7 @@ docker-compose stop node-exporter-1
 Within 30 seconds, Prometheus will trigger an alert that flows to Alertmanager.
 
 
-## 🧹 Tearing It Down
+## Tearing It Down
 
 Once done, you can remove the environment with:
 
@@ -292,7 +292,7 @@ This will also delete volumes. Skip the `-v` flag if you want to preserve your d
 
 ---
 
-## 🧠 Final Thoughts
+## Final Thoughts
 
 Setting up an observability lab like this is more than just an academic exercise. It’s the first step toward understanding how your systems behave in real time — and how you can make them better.
 
