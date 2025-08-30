@@ -1,4 +1,4 @@
-# 🔭 OpenTelemetry in Action on Kubernetes: Part 9 - Cluster-Level Observability with OpenTelemetry Agent + Gateway
+# OpenTelemetry in Action on Kubernetes: Part 9 - Cluster-Level Observability with OpenTelemetry Agent + Gateway
 
 Welcome to the grand finale of our observability series! So far, we’ve added visibility into our **application** through **logs**, **metrics**, and **traces** — all flowing beautifully into **Grafana** via **OpenTelemetry Collector**.
 
@@ -11,14 +11,13 @@ In this final part, we’ll:
 - Introduce `ServiceAccount` for permissions  
 - Collect Kubernetes control plane metrics using `k8s_cluster`  
 - Use the `debug` exporter to troubleshoot data pipelines  
-- 🎉 And finally, conclude the series with a high-level recap
-
+- And finally, conclude the series with a high-level recap
 
 ![OTel-k8s](https://github.com/Kartikdudeja/blogs/blob/main/images/otel-k8s/OTel-k8s.png)
 
 ---
 
-## 🌐 Why Cluster-Level Observability Matters
+## Why Cluster-Level Observability Matters
 
 While we've focused on application telemetry so far, it's just one piece of the puzzle. For full visibility, we must also observe the **Kubernetes cluster** itself — the infrastructure running our apps.
 
@@ -33,11 +32,11 @@ Cluster observability helps us:
 
 In short, without visibility into the cluster, you're flying blind. This part of the series ensures you're watching **not just the app, but the platform beneath it.**
 
-## 🖥️ Add `hostmetrics` Receiver in the Agent
+## Add `hostmetrics` Receiver in the Agent
 
 We’ll start by updating our **otel-collector-agent** (running as DaemonSet) to use the `hostmetrics` receiver. This receiver scrapes system-level metrics from each node, such as CPU, memory, disk, filesystem, and load.
 
-📄 **Config – `otel-collector-agent-configmap.yaml`**
+**Config – `otel-collector-agent-configmap.yaml`**
 ```yaml
 receivers:
   hostmetrics:
@@ -77,19 +76,19 @@ service:
       exporters: [prometheus]
 ```
 
-> 💡 Each `hostmetrics` receiver runs inside the agent pod on every node, giving us **node-specific insights**.
+> Each `hostmetrics` receiver runs inside the agent pod on every node, giving us **node-specific insights**.
 
-## 🚀 Deploy the OpenTelemetry Gateway
+## Deploy the OpenTelemetry Gateway
 
-### 1. 🧠 Why Deployment Mode?
+### 1. Why Deployment Mode?
 * **Deployment Mode** is used for centralized collection, aggregation, and export of telemetry data.
 * Unlike the **DaemonSet agent**, which runs on each node, a **Deployment** collector can scrape and process cluster-wide metrics.
 
-### 2. 🛡️ Create a ServiceAccount, ClusterRole, and ClusterRoleBinding
+### 2. Create a ServiceAccount, ClusterRole, and ClusterRoleBinding
 
 To use the `k8s_cluster` receiver, the collector must have permission to access Kubernetes objects like nodes, pods, namespaces, etc.
 
-#### 🔐 What is a ServiceAccount in Kubernetes?
+#### What is a ServiceAccount in Kubernetes?
 
 A **ServiceAccount** in Kubernetes is an identity used by pods to authenticate and interact securely with the Kubernetes API. While every pod gets a default ServiceAccount, you often need to create custom ones with specific **RBAC (Role-Based Access Control)** permissions for security and least privilege.
 
@@ -197,7 +196,7 @@ Apply it:
 kubectl -n observability apply -f otel-collector-gateway-serviceaccount.yaml
 ```
 
-### 3. 📄 OpenTelemetry Collector Config with `k8s_cluster` Receiver
+### 3. OpenTelemetry Collector Config with `k8s_cluster` Receiver
 
 Create the config file as a ConfigMap.
 
@@ -253,7 +252,7 @@ Apply it:
 kubectl -n observability apply -f otel-collector-gateway-configmap.yaml
 ```
 
-### 4. 🚀 Deploy the OpenTelemetry Collector
+### 4. Deploy the OpenTelemetry Collector
 
 ```yaml
 # otel-collector-gateway-deployment.yaml
@@ -311,7 +310,7 @@ Apply it:
 kubectl -n observability apply -f otel-collector-gateway-deployment.yaml
 ```
 
-### 5. 🌐 Expose Collector to Prometheus
+### 5. Expose Collector to Prometheus
 
 ```yaml
 # otel-collector-gateway-service.yaml
@@ -356,7 +355,7 @@ Then add this to your Prometheus `scrape_configs`:
     - targets: ['otel-collector-gateway.observability.svc.cluster.local:8889']
 ```
 
-### 🧪 Test and Verify
+### Test and Verify
 
 Check deployment status:
 
@@ -366,7 +365,7 @@ kubectl -n observability get all -l app=otel-collector-gateway
 
 ![otel-collector-deployment-get-all](https://github.com/Kartikdudeja/blogs/blob/main/images/otel-k8s/otel-collector-deployment-get-all.png)
 
-## Special Mention: 🐞 Debug Exporter - Your Observability Wingman
+## Special Mention: Debug Exporter - Your Observability Wingman
 
 The **`debug` exporter** in OpenTelemetry Collector is a lightweight and incredibly helpful tool for developers and DevOps engineers when building or troubleshooting telemetry pipelines.
 
@@ -376,13 +375,13 @@ Instead of exporting telemetry data (like logs, metrics, and traces) to a backen
 - It helps **validate instrumentation quickly**, without setting up full observability backends.
 - It's especially useful when you're **testing new receivers, processors, or pipelines**, and want a quick look at the output.
 
-### 🧪 When to Use
+### When to Use
 
 - **Local testing or dev environments**.
 - **Debugging broken data flow**—if Prometheus or Jaeger isn’t showing what you expect.
 - **Learning how OpenTelemetry transforms and routes telemetry data.**
 
-### 🔧 Example Configuration Snippet
+### Example Configuration Snippet
 
 ```yaml
 exporters:
@@ -405,18 +404,24 @@ This ensures traces are sent to Jaeger **and also printed** to the console—gre
 
 ---
 
-## 🎉 Conclusion: You Now Have Full Observability!
+## Conclusion: You Now Have Full Observability!
 
 Over the past 9 parts, you’ve:
 
-✅ Containerized a real ML application  
-✅ Instrumented it with OpenTelemetry  
-✅ Collected traces, logs, and metrics  
-✅ Deployed observability tools in Kubernetes  
-✅ Visualized everything in Grafana  
-✅ Monitored the entire Kubernetes cluster with Agent + Gateway mode
+* Containerized a real ML application  
+* Instrumented it with OpenTelemetry  
+* Collected traces, logs, and metrics  
+* Deployed observability tools in Kubernetes  
+* Visualized everything in Grafana  
+* Monitored the entire Kubernetes cluster with Agent + Gateway mode
 
 You’ve essentially built a **production-grade observability platform** from scratch — **without cloud vendor lock-in**.
+
+---
+
+### Missed the previous article?
+
+Check out **[Part 8: Visualize Everything, Building a Unified Observability Dashboard with Grafana](./part-8_visualize_with_grafana_unfied_dashboard.md)** to see how we got here.
 
 ---
 
