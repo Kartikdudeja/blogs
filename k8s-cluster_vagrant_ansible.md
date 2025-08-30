@@ -1,6 +1,6 @@
-# 🧪DevOps Sandbox: Build Your Own Kubernetes Lab with Vagrant & Ansible
+# DevOps Sandbox: Build Your Own Kubernetes Lab with Vagrant & Ansible
 
-> 💡 *"The best lab is the one you can break and fix a hundred times without cost or consequence."*
+> *"The best lab is the one you can break and fix a hundred times without cost or consequence."*
 
 If you’ve ever wanted to spin up a full-fledged Kubernetes cluster for learning, testing, or demonstrating tooling—without touching the cloud or provisioning anything beyond your laptop—this guide is for you.
 
@@ -11,7 +11,7 @@ Let’s dive into the setup.
 
 ![K8s Cluster](./images/k8s-cluster.png)
 
-## 🛠️ Lab Architecture
+## Lab Architecture
 
 We'll build a 3-node Kubernetes cluster:
 
@@ -35,7 +35,7 @@ kubernetes-cluster/
     └── k8s-worker.yaml
 ```
 
-## 🧳 Step 1: Vagrantfile – Define Your Lab
+## Step 1: Vagrantfile – Define Your Lab
 
 Here’s the core configuration that provisions all three VMs:
 
@@ -181,9 +181,9 @@ Notable features:
 * Calls Ansible playbooks for provisioning the full cluster stack
 * Automatically applies node labels and installs Helm
 
-## 📦 Step 2: Ansible Playbooks – Configure the Cluster
+## Step 2: Ansible Playbooks – Configure the Cluster
 
-### 1. 🧱 `k8s-prereq.yaml`: Prepare All Nodes
+### 1. `k8s-prereq.yaml`: Prepare All Nodes
 
 This playbook prepares all nodes (master + workers) by:
 
@@ -346,7 +346,7 @@ This playbook prepares all nodes (master + workers) by:
 
 ```
 
-### 2. 🧠 `k8s-master.yaml`: Initialize the Master
+### 2. `k8s-master.yaml`: Initialize the Master
 
 This playbook:
 
@@ -400,9 +400,9 @@ This playbook:
     local_action: copy content="{{ join_command.stdout_lines[0] }}" dest="./join-command"
 ```
 
-⚠️ The generated join command is written to a file locally. This is later copied to the worker nodes.
+The generated join command is written to a file locally. This is later copied to the worker nodes.
 
-### 3. 🧑‍🏭 `k8s-worker.yaml`: Join Worker Nodes
+### 3. `k8s-worker.yaml`: Join Worker Nodes
 
 This playbook:
 
@@ -444,7 +444,7 @@ This playbook:
         state: restarted
 ```
 
-## 📋 Inventory File
+## Inventory File
 
 Your `inventory.ini` should categorize the nodes like so:
 
@@ -474,7 +474,7 @@ ansible_python_interpreter=/usr/bin/python3
 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 ```
 
-## 🚀 Bootstrapping the Lab
+## Bootstrapping the Lab
 
 Once everything is in place:
 
@@ -492,11 +492,11 @@ vagrant ssh k8s-master
 kubectl get nodes
 ```
 
-## 🎁 Bonus: Helm Installed by Default
+## Bonus: Helm Installed by Default
 
 The setup script also installs Helm on the master node, making it easy to test out Helm charts and manage add-ons right away.
 
-## 🧹 Tear Down When Done
+## Tear Down When Done
 
 To clean up your lab environment:
 
@@ -506,7 +506,7 @@ vagrant destroy -f
 
 ---
 
-## 📘 Final Thoughts
+## Final Thoughts
 
 > "If you have a reasonably powerful laptop and prefer not to burn a hole in your wallet with cloud bills, this local Kubernetes lab setup is your perfect playground to learn, experiment, and break things safely."
 
