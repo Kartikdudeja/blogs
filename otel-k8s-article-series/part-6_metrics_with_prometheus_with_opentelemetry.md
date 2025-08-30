@@ -1,12 +1,12 @@
-# 🔭 OpenTelemetry in Action on Kubernetes: Part 6 - Tracking Metrics with Prometheus and OpenTelemetry
+# OpenTelemetry in Action on Kubernetes: Part 6 - Tracking Metrics with Prometheus and OpenTelemetry
 
-Observability isn’t complete without **metrics**—the vital signs of your applications and services. In this part, we integrate **Prometheus** into our Kubernetes-based observability stack. You’ll learn how Prometheus works with OpenTelemetry, deploy it into your cluster, and finally visualize custom application metrics generated in Part 2.
+Observability isn’t complete without **metrics**—the vital signs of your applications and services. In this part, we integrate **Prometheus** into our Kubernetes-based observability stack. You’ll learn how Prometheus works with OpenTelemetry, deploy it into your cluster, and finally visualize custom application metrics generated in [Part 2](./part-2_instrument_and_dockerize_mlapp_python_app.md).
 
 ![OTel-k8s](https://github.com/Kartikdudeja/blogs/blob/main/images/otel-k8s/OTel-k8s.png)
 
 ---
 
-## 📊 What is Prometheus?
+## What is Prometheus?
 
 **Prometheus** is an open-source monitoring system that scrapes metrics from configured targets, stores them in a time-series database, and allows you to query them using PromQL. It’s widely adopted in the Kubernetes ecosystem for infrastructure and application monitoring.
 
@@ -14,7 +14,7 @@ Prometheus doesn’t “pull” metrics directly from applications. Instead, app
 
 When integrated with OpenTelemetry, the **OpenTelemetry Collector** acts as a bridge—it collects metrics from instrumented applications and exposes them in a Prometheus-compatible format.
 
-## 📏 What are Metrics?
+## What are Metrics?
 
 **Metrics** are numerical data points that capture the health, performance, and resource usage of your system. For example:
 
@@ -29,7 +29,7 @@ In our app, we’ve already defined two custom metrics:
 
 Now, let’s expose them to Prometheus.
 
-## 📦 Prometheus Deployment
+## Prometheus Deployment
 
 Let’s deploy Prometheus into our Kubernetes cluster. You’ll need the following YAML file:
 
@@ -123,7 +123,7 @@ This YAML file deploys **Prometheus** into the Kubernetes cluster with three key
 
 Together, these resources allow Prometheus to run continuously, collect metrics from OTEL, and expose them for querying and visualization.
 
-## 🔧 Prometheus Config Explained
+## Prometheus Config Explained
 
 Here’s a minimal Prometheus configuration we’ll use:
 
@@ -143,7 +143,7 @@ scrape_configs:
 
 This configuration tells Prometheus to scrape metrics every **15 seconds**. It monitors itself (`localhost:9090`) and also scrapes the **OpenTelemetry Collector agent** at its service endpoint (`otel-collector-agent.observability.svc.cluster.local:8889`). This is where our app metrics are exposed.
 
-## 🧪 Updating OpenTelemetry Collector Config
+## Updating OpenTelemetry Collector Config
 
 We need to update our OTEL Collector configuration to export metrics to Prometheus.
 
@@ -193,14 +193,14 @@ Here’s the relevant config:
           exporters: [prometheus]
 ```
 
-## 🚀 Deploying Prometheus to Kubernetes
+## Deploying Prometheus to Kubernetes
 
 ```bash
 # Apply Prometheus config and deployment
 kubectl -n observability apply -f prometheus.yaml
 ```
 
-## 🔍 Visualizing Custom Metrics
+## Visualizing Custom Metrics
 
 1. Make some API calls to the application:
 
@@ -229,11 +229,11 @@ You should see data flowing in!
 
 ---
 
-## 🔮 What’s Next?
+## What’s Next?
 
 Now that we’ve captured and visualized **metrics**, the observability story is coming together. But there’s still one pillar left—**logs**.
 
-In **Part 7**, we’ll deploy **Loki**, the log aggregation system, and configure the OpenTelemetry Collector to ship structured logs from our app to Loki. Stay tuned!
+In [Part 7](./part-7_logs_with_logi_with_opentelemetry.md), we’ll deploy **Loki**, the log aggregation system, and configure the OpenTelemetry Collector to ship structured logs from our app to Loki. Stay tuned!
 
 ---
 
