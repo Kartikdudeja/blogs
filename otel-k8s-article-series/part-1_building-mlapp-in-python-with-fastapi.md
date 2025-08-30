@@ -1,30 +1,30 @@
-# 🔭 OpenTelemetry in Action on Kubernetes: Part 1 - Building a Simple ML App with FastAPI
+# OpenTelemetry in Action on Kubernetes: Part 1 - Building a Simple ML App with FastAPI
 
-🚀 **Introduction to the Series**
+**Introduction to the Series**
 
 Welcome to _**“The Observability Blueprint: Instrument, Deploy, Observe — OpenTelemetry in Action on Kubernetes”**_ – where we take a humble machine learning application and give it superpowers: observability across metrics, logs, and traces using open-source tools like OpenTelemetry, Prometheus, Jaeger, Loki, and Grafana.
 
 In this blog series, we’ll:
-- 🤖 Build a simple ML app using FastAPI
-- 📦 Instrument it using OpenTelemetry
-- 🐳 Containerize it with Docker
-- ☸️ Deploy it to Kubernetes
-- 🔭 Collect and visualize observability data like a pro
+- Build a simple ML app using FastAPI
+- Instrument it using OpenTelemetry
+- Containerize it with Docker
+- Deploy it to Kubernetes
+- Collect and visualize observability data like a pro
 
-🎯 Goal: show how to fully observe a production-ish ML app from every angle using only open-source tools.
+Goal: show how to fully observe a production-ish ML app from every angle using only open-source tools.
 
 ![OTel-k8s](https://github.com/Kartikdudeja/blogs/blob/main/images/otel-k8s/OTel-k8s.png)
 
 ---
 ## Part 1: Building a Simple ML App with FastAPI
 
-🧰 _Prerequisites:_
+_Prerequisites:_
 Before we start, make sure you have:
 - Python 3.8+
 - `pip`
 - Basic familiarity with Python and REST APIs (we promise to keep it friendly)
 
-🔧 **Step 0: Set Up a Virtual Environment**
+**Step 0: Set Up a Virtual Environment**
 Let’s avoid polluting your global Python setup. Run the following:
 ```bash
 python3 -m venv venv
@@ -46,7 +46,7 @@ Then Install:
 pip3 install -r requirements.txt
 ```
 
-🧠 **Step 1: What’s Machine Learning? And Why Linear Regression?**
+**Step 1: What’s Machine Learning? And Why Linear Regression?**
 **Machine Learning** is the art (and science) of teaching computers to learn patterns from data instead of writing rule-based code.
 
 In this part, we’ll use **Linear Regression**, the "hello world" of ML models. It assumes there’s a straight-line relationship between input and output — in our case, the bigger the house, the higher the price. (Groundbreaking stuff, we know.)
@@ -78,10 +78,10 @@ print("Model trained and saved as 'house_price_model.pkl'")
 ```
 This generates a `.pkl` file — a serialized version of our model we’ll later load inside an Application.
 
-⚡ **Step 2: Serve It via FastAPI**
+**Step 2: Serve It via FastAPI**
 Let’s make it accessible to the outside world.
 
-📦 **Why FastAPI?**
+**Why FastAPI?**
 
 FastAPI is a modern Python web framework built for speed (thanks to Starlette & Pydantic), great dev experience, and automatic documentation. It’s a joy to use — kind of like Flask, but with type hints and Swagger included.
 
@@ -126,12 +126,12 @@ def predict(data: HouseFeatures, request: Request):
         return {"predicted_price": prediction[0]}
 ```
 
-▶️ **Run it with:**
+**Run it with:**
 ```bash
 uvicorn app:app --reload
 ```
 
-🧪 **Try It Out**
+**Try It Out**
 ```bash
 curl -i 'http://127.0.0.1:8000/'
 ```
@@ -140,19 +140,20 @@ POST to `/predict/` with:
 ```bash
 curl -i -X POST 'http://127.0.0.1:8000/predict/' -H "Content-Type: application/json" -d '{"features": [1500]}'
 ```
-💡 Output:
+
+Output:
 ```json
 {
   "predicted_price": 200000.0
 }
 ```
-_Congratulations, you just served your first ML model! 🎉_
+_Congratulations, you just served your first ML model!_
 
 ---
 
-✅ What’s Next?
+What’s Next?
 
-In Part 2, we’ll dockerize the app so it's ready for deployment in the wild. We’ll also start thinking about instrumenting the app — because what’s an API without observability metrics to brag about?
+In [Part 2](./part-2_instrument_and_dockerize_mlapp_python_app.md), we’ll dockerize the app so it's ready for deployment in the wild. We’ll also start thinking about instrumenting the app — because what’s an API without observability metrics to brag about?
 
 ---
 
