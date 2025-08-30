@@ -1,4 +1,4 @@
-# 🎩 Ansible Local Lab with Vagrant in No Time
+# Ansible Local Lab with Vagrant in No Time
 
 > *“Today, we step into Act Two — where Vagrant doesn’t just spin up machines, but lays the foundation for something greater: Ansible.”*
 
@@ -17,8 +17,8 @@ Before you deploy Ansible in production or try to tame a horde of cloud VMs, you
 Enter **Vagrant**.
 
 With it, we can spin up a lightweight lab on your laptop:  
-- 🖥️ 1x Control Node (where Ansible is installed)
-- 🌐 2x Managed Nodes (target servers for playbooks)
+- 1x Control Node (where Ansible is installed)
+- 2x Managed Nodes (target servers for playbooks)
 
 
 ![Lab HLD](./images/ansible_lab_hld.png)
@@ -99,22 +99,22 @@ end
 ```
 
 
-### 📝 Let’s Break It Down
+### Let’s Break It Down
 
-#### 🧠 `$ansibleSetup` Script
+#### `$ansibleSetup` Script
 
 This block provisions the **controller node**:
 - Installs **EPEL** and **Ansible**
 - Adds a minimal `ansible.cfg` to **disable host key checking** (avoids SSH prompts)
 
-#### 🏗️ `config.vm.define`
+#### `config.vm.define`
 We create **three virtual machines**:
 - **Controller**: 1 GB RAM, with Ansible installed
 - **Node01** and **Node02**: 512 MB RAM each, act as Ansible targets
 
 Each machine has a **private static IP** and uses the **`geerlingguy/rockylinux8`** Vagrant box — a community favorite for Ansible labs.
 
-#### 🧾 Host Management
+#### Host Management
 `vagrant-hostmanager` plugin keeps `/etc/hosts` files in sync, so machines can refer to each other by hostname.
 
 ### Boot the Lab
@@ -127,7 +127,7 @@ Before running the Vagrantfile, you’ll need to install the `vagrant-hostmanage
 vagrant plugin install vagrant-hostmanager
 ```
 
-> 📝 Note: You might need **admin/root privileges** depending on your system. On Linux/macOS, run with `sudo` if needed.
+> Note: You might need **admin/root privileges** depending on your system. On Linux/macOS, run with `sudo` if needed.
 
 Once installed, the plugin will automatically update host entries during `vagrant up` and `vagrant halt`.
 
@@ -169,7 +169,7 @@ ansible_ssh_pass=vagrant
 
 This is how Ansible knows where to connect, and who’s who in your infrastructure. The `vagrant` user with `vagrant` password is preconfigured on all Vagrant boxes — easy and perfect for learning.
 
-### 🚀 Test It!
+### Test It!
 
 From the controller node:
 
@@ -184,7 +184,7 @@ If all goes well, you’ll get a “pong” from every host. Congratulations. Yo
 
 ---
 
-## 🎯 Final Thoughts
+## Final Thoughts
 
 This lab is simple — but simplicity is underrated. Especially in automation.
 
