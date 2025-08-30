@@ -1,15 +1,14 @@
-# 🔭 OpenTelemetry in Action on Kubernetes: Part 5 - Tracing the Lines, Sending Spans from App to Jaeger
+# OpenTelemetry in Action on Kubernetes: Part 5 - Tracing the Lines, Sending Spans from App to Jaeger
 
-In the last part, we set up the OpenTelemetry Collector in **agent mode** to receive telemetry data from our ML app. But telemetry isn't useful if it's just sitting in logs, right? We want **end-to-end traces** that we can **visualize, search, and troubleshoot**.
+In the [last part](./part-4_otel-collector-ds-agent-in-k8s.md), we set up the OpenTelemetry Collector in **agent mode** to receive telemetry data from our ML app. But telemetry isn't useful if it's just sitting in logs, right? We want **end-to-end traces** that we can **visualize, search, and troubleshoot**.
 
 And that’s exactly where **Jaeger** enters the scene.
-
 
 ![OTel-k8s](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/bg7a2b1jejddbdfjb32s.png)
 
 ---
 
-## 🕵️‍♂️ What is Jaeger?
+## What is Jaeger?
 
 Jaeger is an **open-source distributed tracing system**, originally built by Uber, and now part of the CNCF. It helps you:
 
@@ -18,16 +17,16 @@ Jaeger is an **open-source distributed tracing system**, originally built by Ube
 * Perform root cause analysis
 * Visualize request flow across services
 
-In short, if your app is a mystery novel, Jaeger is Sherlock Holmes. 🕵️
+In short, if your app is a mystery novel, Jaeger is Sherlock Holmes.
 
-## 🔗 What are Traces and Spans?
+## What are Traces and Spans?
 
 * A **trace** is a complete journey of a request through your app — from start to finish.
 * A **span** is a single step in that journey, like one function call or one external API hit.
 
 Think of a **trace** as the delivery of a pizza. Every **span** is a milestone in that process — order placed, pizza prepared, baked, out for delivery, delivered. Jaeger shows you the whole pizza journey.
 
-## 📦 Jaeger Deployment in Kubernetes
+## Jaeger Deployment in Kubernetes
 
 Let’s deploy Jaeger in our Kubernetes cluster.
 
@@ -112,7 +111,7 @@ Now open [http://localhost:16686](http://localhost:16686) in your browser.
 
 ![jaeger-ui](https://github.com/Kartikdudeja/blogs/blob/main/images/otel-k8s/jaeger-ui.png)
 
-## 🔁 Update the OpenTelemetry Collector Pipeline
+## Update the OpenTelemetry Collector Pipeline
 
 Now that Jaeger is live, we need to **update the OpenTelemetry Collector config** to **export spans to Jaeger**.
 
@@ -171,7 +170,7 @@ Rollout the collector to pick up the new config:
 kubectl -n observability rollout restart deployment otel-collector-agent
 ```
 
-## 🧪 Test the Setup
+## Test the Setup
 
 Get the Endpoint IP from the K8s service:
 ```bash
@@ -186,7 +185,7 @@ curl -X POST "http://${API_ENDPOINT_IP}:80/predict/" \
   -d '{"features": [1200]}'
 ```
 
-## 🎨 View Traces in Jaeger UI
+## View Traces in Jaeger UI
 
 Open Jaeger UI in your browser.
 
@@ -198,11 +197,11 @@ Open Jaeger UI in your browser.
 
 ---
 
-### 🔜 Coming Up Next: From Spans to Stats — Let’s Talk Metrics 📊
+### [Up Next](./part-6_metrics_with_prometheus_with_opentelemetry.md): From Spans to Stats — Let’s Talk Metrics
 
 Now that Jaeger is live and humming—collecting traces and giving us deep insights into our application’s behavior—it's time to turn our attention to the second pillar of observability: **metrics**.
 
-👉 Stay tuned as we wire up Prometheus and bring **metrics into the mix**, completing another piece of our observability blueprint.
+Stay tuned as we wire up Prometheus and bring **metrics into the mix**, completing another piece of our observability blueprint.
 
 ---
 
