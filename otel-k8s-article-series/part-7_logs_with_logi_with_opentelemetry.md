@@ -1,6 +1,6 @@
-# 🔭 OpenTelemetry in Action on Kubernetes: Part 7 - Let There Be Logs, Observability’s Final Pillar with Loki
+# OpenTelemetry in Action on Kubernetes: Part 7 - Let There Be Logs, Observability’s Final Pillar with Loki
 
-## 🪵 Logs: The Footprints of Your System
+## Logs: The Footprints of Your System
 
 **Logs** are timestamped records of events that happen in your system — like breadcrumbs left behind by your application as it performs operations. They help you understand what happened, when it happened, and often why it happened.
 
@@ -14,7 +14,7 @@ In observability, logs play a key role when:
 
 ---
 
-## 🧰 Meet Loki — Prometheus for Logs
+## Meet Loki — Prometheus for Logs
 
 **Loki**, built by the folks at Grafana Labs, is a log aggregation system designed to be:
 
@@ -24,7 +24,7 @@ In observability, logs play a key role when:
 
 Instead of shipping logs to a bulky ELK stack, Loki works smoothly with Promtail, FluentBit, or OpenTelemetry Collector to aggregate logs from across your cluster.
 
-## 🚀 Deploying Loki in Kubernetes
+## Deploying Loki in Kubernetes
 
 Let’s deploy Loki using a simple YAML manifest that includes:
 
@@ -169,7 +169,7 @@ spec:
 
 The Loki manifest sets up a log aggregator inside your Kubernetes cluster that listens for incoming logs on a defined port. The service makes Loki accessible to other components, such as the OTEL Collector, while the ConfigMap gives Loki its brain — deciding how logs flow and where they go.
 
-## ⚙️ Updating OpenTelemetry Collector to Send Logs to Loki
+## Updating OpenTelemetry Collector to Send Logs to Loki
 
 We now need to tell the **OTEL Collector Agent** to collect logs using the `filelog` receiver and ship them off to Loki. Here's the flow:
 
@@ -201,7 +201,7 @@ service:
       exporters: [loki]
 ```
 
-## 🚀 Deploying Loki to Kubernetes
+## Deploying Loki to Kubernetes
 
 ```bash
 # Apply the Loki manifests
@@ -218,16 +218,22 @@ curl -X GET "http://$(kubectl -n observability get svc -l app=loki -o json | jq 
 
 ---
 
-## 👀 What’s Next?
+## What’s Next?
 
-In **Part 8**, we’ll bring everything together with **Grafana** — the ultimate observability dashboard:
+In [Part 8](./part-8_visualize_with_grafana_unfied_dashboard.md), we’ll bring everything together with **Grafana** — the ultimate observability dashboard:
 
 * Visualizing traces from **Jaeger**
 * Querying metrics from **Prometheus**
 * Searching logs from **Loki**
 * All in a single unified interface.
 
-The observability trifecta — complete, powerful, and open source. Stay tuned. 🎯
+The observability trifecta — complete, powerful, and open source. Stay tuned.
+
+---
+
+### Missed the previous article?
+
+Check out **[Part 6: Tracking Metrics with Prometheus and OpenTelemetry](./part-6_metrics_with_prometheus_with_opentelemetry.md)** to see how we got here.
 
 ---
 
