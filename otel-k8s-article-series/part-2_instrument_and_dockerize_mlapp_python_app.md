@@ -1,8 +1,8 @@
-# 🔭 OpenTelemetry in Action on Kubernetes: Part 2 - Instrument And Dockerizing
+# OpenTelemetry in Action on Kubernetes: Part 2 - Instrument And Dockerizing
 
-🧭 What’s Happening in Part 2?
+What’s Happening in Part 2?
 
-Welcome back, observability explorers! In [Part 1](https://github.com/Kartikdudeja/blogs/blob/main/otel-k8s-article-series/part-1_building-mlapp-in-python-with-fastapi.md), we built a basic FastAPI app to predict house prices with the help of linear regression. But let’s be honest — a naked app in production is like flying blind with no cockpit instruments.
+Welcome back, observability explorers! In [Part 1](./part-1_building-mlapp-in-python-with-fastapi.md), we built a basic FastAPI app to predict house prices with the help of linear regression. But let’s be honest — a naked app in production is like flying blind with no cockpit instruments.
 
 So in this chapter of our telemetry tale, we’re going to:
 
@@ -19,17 +19,17 @@ By the end, your app will be **telemetry-ready**, trace-emitting, log-spraying, 
 
 ---
 
-### 🧪 Let’s Talk Observability Instrumentation
+### Let’s Talk Observability Instrumentation
 
 Here’s what we added to our Python FastAPI app:
 
-#### ✅ Tracing
+#### Tracing
 
 * We're using OpenTelemetry’s SDK to generate spans for each endpoint.
 * Each request to `/` or `/predict` is wrapped in a **tracer span**.
 * We tag the `/predict` span with the **input features** as metadata.
 
-#### ✅ Metrics
+#### Metrics
 
 * We define two custom metrics:
 
@@ -37,7 +37,7 @@ Here’s what we added to our Python FastAPI app:
   * `api_latency_seconds`: A histogram to record request duration
 * Each metric includes useful **labels** like `endpoint` and `method`.
 
-#### ✅ Logging
+#### Logging
 
 * Logs are now output in **structured JSON**, perfect for parsing.
 * We log helpful events like:
@@ -47,7 +47,7 @@ Here’s what we added to our Python FastAPI app:
 
 Here’s a breakdown of the key code snippets:
 
-### 📦 Tracing Setup
+### Tracing Setup
 
 ```python
 trace.set_tracer_provider(TracerProvider(resource=resource))
@@ -56,9 +56,9 @@ span_exporter = OTLPSpanExporter()
 trace.get_tracer_provider().add_span_processor(BatchSpanProcessor(span_exporter))
 ```
 
-> ⛳ OTLP = OpenTelemetry Protocol. We're exporting spans using OTLP over gRPC — which will be picked up by the OpenTelemetry Collector later in the series.
+> OTLP = OpenTelemetry Protocol. We're exporting spans using OTLP over gRPC — which will be picked up by the OpenTelemetry Collector later in the series.
 
-### 📊 Metrics Setup
+### Metrics Setup
 
 ```python
 metrics.set_meter_provider(MeterProvider(resource=resource, metric_readers=[metric_reader]))
@@ -66,9 +66,9 @@ api_counter = meter.create_counter("api_requests_total", ...)
 api_latency = meter.create_histogram("api_latency_seconds", ...)
 ```
 
-> 🧠 Custom metrics give you way more flexibility than auto-generated ones — and they're fun to build!
+> Custom metrics give you way more flexibility than auto-generated ones — and they're fun to build!
 
-### 🧾 Logging in JSON
+### Logging in JSON
 
 ```python
 class JsonFormatter(logging.Formatter):
@@ -76,9 +76,9 @@ class JsonFormatter(logging.Formatter):
         ...
 ```
 
-> 🧪 We format every log entry into JSON — making them machine-parseable and human-readable (if your brain speaks JSON).
+> We format every log entry into JSON — making them machine-parseable and human-readable (if your brain speaks JSON).
 
-### 🌐 Application Routes
+### Application Routes
 
 We wrap each route in a span, log the action, increment counters, and record latency:
 
@@ -91,7 +91,7 @@ def read_root(request: Request):
         api_latency.record(...)
 ```
 
-### 📜 Full Python Code — Instrumented with Tracing, Metrics, and Logs
+### Full Python Code — Instrumented with Tracing, Metrics, and Logs
 
 Here's the Complete Code After Instrumentation:
 ```python
@@ -256,11 +256,11 @@ wrapt==1.17.2
 zipp==3.21.0
 ```
 
-## 🐳 Dockerizing the App (Now with Telemetry Magic!)
+## Dockerizing the App (Now with Telemetry Magic!)
 
 Now that the app can observe itself, it’s time to containerize it.
 
-### 🧱 Dockerfile Summary
+### Dockerfile Summary
 
 ```Dockerfile
 # lightweight base image
@@ -306,7 +306,7 @@ CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
 
 Let’s take a look under the hood of our Dockerfile. This container is built with observability and security in mind — no root shenanigans here.
 
-#### 📦 Base Image
+#### Base Image
 
 ```dockerfile
 FROM python:3.10.12-slim
@@ -314,7 +314,7 @@ FROM python:3.10.12-slim
 
 We start with a **slim and clean Python 3.10** base image — small footprint, fewer vulnerabilities, and fast builds. It’s perfect for production-ready containers.
 
-#### 🏷️ Metadata Labels
+#### Metadata Labels
 
 ```dockerfile
 LABEL app="ml-prediction-model"
@@ -324,7 +324,7 @@ LABEL lab="observability"
 
 These labels help organize and identify the image in registries or orchestrators like Kubernetes. Think of it as giving your container a business card.
 
-#### 👤 Security First: Create a Non-Root User
+#### Security First: Create a Non-Root User
 
 ```dockerfile
 RUN adduser --disabled-password --gecos '' appuser
@@ -332,7 +332,7 @@ RUN adduser --disabled-password --gecos '' appuser
 
 Instead of running your app as root (a big no-no in production), we create a minimal non-root user called `appuser`. This is a best practice for container security.
 
-#### 📂 Set the Working Directory
+#### Set the Working Directory
 
 ```dockerfile
 WORKDIR /app
@@ -340,7 +340,7 @@ WORKDIR /app
 
 This sets `/app` as the working directory for all subsequent commands — keeping things tidy and predictable.
 
-#### 📜 Install Python Dependencies
+#### Install Python Dependencies
 
 ```dockerfile
 COPY requirements.txt .
@@ -349,7 +349,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 We copy the dependency list into the image and install everything in one go using `pip`. The `--no-cache-dir` keeps the image size lean by avoiding pip's cache bloat.
 
-#### 🧹 Clean Up Temporary Files
+#### Clean Up Temporary Files
 
 ```dockerfile
 RUN rm -rf /tmp/*
@@ -357,7 +357,7 @@ RUN rm -rf /tmp/*
 
 Another space-saving move — we wipe `/tmp` to keep the image leaner and meaner.
 
-#### 🧠 Add the App and Model
+#### Add the App and Model
 
 ```dockerfile
 COPY app.py .
@@ -366,7 +366,7 @@ COPY house_price_model.pkl .
 
 We copy our **instrumented FastAPI app** and the **trained ML model** into the image.
 
-#### 🔐 Set Ownership and Use Non-Root User
+#### Set Ownership and Use Non-Root User
 
 ```dockerfile
 RUN chown -R appuser:appuser /app
@@ -375,7 +375,7 @@ USER appuser
 
 We change ownership of the `/app` directory to `appuser` and switch the active user. This enforces that your app runs without elevated privileges. Good security hygiene!
 
-#### 🌐 Expose Ports
+#### Expose Ports
 
 ```dockerfile
 EXPOSE 8000
@@ -385,7 +385,7 @@ EXPOSE 4317
 * `8000` is the app port served by **Uvicorn**.
 * `4317` is the default **OTLP gRPC port** used by OpenTelemetry exporters to communicate with the **OpenTelemetry Collector**.
 
-#### 🚀 Start the FastAPI App
+#### Start the FastAPI App
 
 ```dockerfile
 CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
@@ -393,18 +393,18 @@ CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
 
 The default command starts your FastAPI app using **Uvicorn**, binding it to all interfaces so it’s accessible from outside the container.
 
-### ✅ Summary
+### Summary
 
 This Dockerfile is:
 
-* ✅ **Minimal** (slim base image)
-* ✅ **Secure** (non-root user)
-* ✅ **Telemetry-ready** (OTLP and app ports exposed)
-* ✅ **Production-friendly** (clean and explicit)
+* **Minimal** (slim base image)
+* **Secure** (non-root user)
+* **Telemetry-ready** (OTLP and app ports exposed)
+* **Production-friendly** (clean and explicit)
 
 ---
 
-## 🧪 Build & Run the Docker Container
+## Build & Run the Docker Container
 
 Run these commands:
 
@@ -414,7 +414,7 @@ docker run -d -p 8000:8000 --name house-price-predictor house-price-predictor:v2
 ```
 ![ml-app-start-logs](https://github.com/Kartikdudeja/blogs/blob/main/images/otel-k8s/ml-app-start-logs.png)
 
-### 🧪 **Try It Out**
+### **Try It Out**
 ```bash
 curl -i -X GET 'http://127.0.0.1:8000/'
 ```
@@ -434,25 +434,25 @@ curl -i -X POST 'http://127.0.0.1:8000/predict/' -H "Content-Type: application/j
 
 ---
 
-## ✅ What We've Achieved
+## What We've Achieved
 
-🎯 **In this part**, we’ve:
+**In this part**, we’ve:
 
 * Instrumented the app with OpenTelemetry SDK
 * Added spans, logs, and custom metrics
 * Dockerized and tested the telemetry-powered service
 
 ---
-### 🛣️ What’s Next: Let’s Get This Thing on Kubernetes
+### What’s Next: Let’s Get This Thing on Kubernetes
 
 Now that our app is fully instrumented — logging in structured JSON, generating traces and spans, emitting custom metrics — and Dockerized for portability, it’s time to take the next big leap:
 
-> 🔮 **Deploying the app to a Kubernetes cluster.**
+> **Deploying the app to a Kubernetes cluster.**
 
-In **Part 3**, we’ll:
+In [Part 3](./part-3_deploying-app-in-k8s.md), we’ll:
 
-* 📦 Create Kubernetes manifest files for deploying our FastAPI + ML app.
-* 📤 Expose the app so we can access it and start generating telemetry from a real-world setup.
+* Create Kubernetes manifest files for deploying our FastAPI + ML app.
+* Expose the app so we can access it and start generating telemetry from a real-world setup.
 
 Oh, and yes — our **OTLP port (4317)** is coming along for the ride, ready to chat with the OpenTelemetry Collector once it’s up.
 
