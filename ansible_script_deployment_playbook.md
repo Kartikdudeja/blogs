@@ -1,4 +1,4 @@
-# 📜Automate Script Deployment and Scheduling with Ansible
+# Automate Script Deployment and Scheduling with Ansible
 
 In the world of DevOps, automation is not just a convenience—it's a superpower. And when it comes to configuring remote systems at scale, **Ansible** continues to shine as one of the most elegant and efficient tools in the toolbox.
 
@@ -9,7 +9,7 @@ In this article, we’ll walk through an Ansible playbook designed to automate t
 
 ![Linux-Ansible](./images/linux-ansible.png)
 
-## 📜 Anatomy of the Playbook
+## Anatomy of the Playbook
 
 Here's the heart of the automation:
 
@@ -22,7 +22,7 @@ Here's the heart of the automation:
 
 We begin by defining a playbook that runs on **all hosts**, with `become: true` to elevate privileges when needed. No facts gathering means faster execution, since we're dealing with static tasks.
 
-### 🔧 Variables Section
+### Variables Section
 
 ```yaml
 vars:
@@ -42,7 +42,7 @@ vars:
 
 These variables give you full control over where and how your script is deployed, and at what schedule it should run. Want it every hour? Change `MINUTE: 0`. Different user? Change `DEPLOY_FOR_USER`, `SCRIPT_USER_OWNER`, `SCRIPT_GROUP_OWNER`.
 
-### 📂 Task 1: Ensure the Directory Exists
+### Task 1: Ensure the Directory Exists
 
 ```yaml
 - name: "Create the directory if it does not exist"
@@ -54,7 +54,7 @@ These variables give you full control over where and how your script is deployed
 
 Simple and effective—if the target directory isn't there, it's created.
 
-### 📄 Task 2: Copy the Script
+### Task 2: Copy the Script
 
 ```yaml
 - name: "Place Script at the desired path"
@@ -68,7 +68,7 @@ Simple and effective—if the target directory isn't there, it's created.
 
 This copies the script from your local directory (`SCRIPT_SRC`) to the destination on the remote server (`SCRIPT_DEST`) with proper permissions and ownership.
 
-### ⏰ Task 3: Add a Crontab Entry
+### Task 3: Add a Crontab Entry
 
 ```yaml
 - name: "make crontab entry for the script"
@@ -85,7 +85,7 @@ This copies the script from your local directory (`SCRIPT_SRC`) to the destinati
 
 This is where the magic happens. A cron job is created (or updated if it already exists) to schedule the script’s execution. With the default values, it will run every 10 minutes.
 
-## 📦 Complete Playbook
+## Complete Playbook
 ```yaml
 # Deploy Bash Script with Ansible
 
@@ -158,7 +158,7 @@ Make sure your `inventory.ini` file lists the remote hosts you want to target.
 
 ---
 
-## 🎯 Why Use This?
+## Why Use This?
 
 This approach is:
 - **Repeatable**: Run it anytime to redeploy or update the cron schedule.
