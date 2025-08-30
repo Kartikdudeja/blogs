@@ -1,6 +1,6 @@
-# 🔭 OpenTelemetry in Action on Kubernetes: Part 8 - Visualize Everything, Building a Unified Observability Dashboard with Grafana
+# OpenTelemetry in Action on Kubernetes: Part 8 - Visualize Everything, Building a Unified Observability Dashboard with Grafana
 
-## 🔍 Why Visualization Matters
+## Why Visualization Matters
 
 Telemetry data — logs, metrics, and traces — gives you deep insights into your system’s behavior. But let’s be honest: staring at JSON traces or YAML logs isn’t exactly thrilling.
 
@@ -16,7 +16,7 @@ A good dashboard:
 
 ---
 
-## 🧭 Meet Grafana: The Observatory for Observability
+## Meet Grafana: The Observatory for Observability
 
 **Grafana** is an open-source analytics and visualization platform designed to work with various telemetry backends — including:
 
@@ -32,7 +32,7 @@ Grafana is:
 
 It turns raw observability data into **actionable dashboards**.
 
-## 🚀 Deploying Grafana in Kubernetes
+## Deploying Grafana in Kubernetes
 
 We’ll deploy Grafana with a basic Deployment and Service. You can customize it with a persistent volume or admin credentials if needed.
 
@@ -95,7 +95,7 @@ spec:
   type: ClusterIP
 ```
 
-### 🧾 Deploy Grafana
+### Deploy Grafana
 
 ```bash
 # Apply deployment and service files
@@ -114,11 +114,11 @@ Now visit [http://localhost:3000](http://localhost:3000) in your browser.
 * Username: `admin`
 * Password: `admin`
 
-## 🔌 Configure Datasources in Grafana
+## Configure Datasources in Grafana
 
 Once inside the Grafana UI, follow these steps to add your observability backends:
 
-### 1️⃣ Add **Prometheus** as a Datasource:
+### Add **Prometheus** as a Datasource:
 
 * Go to **Home** →  **Connections** →  **Data sources**
 * Click **Add new data source**
@@ -130,7 +130,7 @@ Once inside the Grafana UI, follow these steps to add your observability backend
   ```
 * Click **Save & Test**
 
-### 2️⃣ Add **Loki** as a Datasource:
+### Add **Loki** as a Datasource:
 
 * Repeat above steps, choose **Loki**
 * Set URL to:
@@ -140,7 +140,7 @@ Once inside the Grafana UI, follow these steps to add your observability backend
   ```
 * Save & Test
 
-### 3️⃣ Add **Jaeger** as a Datasource:
+### Add **Jaeger** as a Datasource:
 
 * Choose **Jaeger** from the list
 * Set URL to:
@@ -152,7 +152,7 @@ Once inside the Grafana UI, follow these steps to add your observability backend
 
 ![grafana-datasources-list](https://github.com/Kartikdudeja/blogs/blob/main/images/otel-k8s/grafana-datasources-list.png)
 
-## 🔍 Explore Logs, Metrics, and Traces
+## Explore Logs, Metrics, and Traces
 
 Head over to the **Explore** tab in Grafana:
 
@@ -163,13 +163,13 @@ Head over to the **Explore** tab in Grafana:
 * Select **Jaeger** → Search traces for your app, filtered by service name
 * Select **Prometheus** → Query custom app metrics
 
-> 🔥 This is your real-time debugging playground.
+> This is your real-time debugging playground.
 
-## 🧱 Build a Unified Dashboard
+## Build a Unified Dashboard
 
 Now let’s pull it all together.
 
-### 🔧 Steps to Create a Dashboard:
+### Steps to Create a Dashboard:
 
 1. Go to the **Dashboards** section → Click **New Dashboard**
 
@@ -189,28 +189,34 @@ Now let’s pull it all together.
 
 ![grafana-dashboard](https://github.com/Kartikdudeja/blogs/blob/main/images/otel-k8s/grafana-dashboard.png)
 
-## 🎯 Conclusion
+## Conclusion
 
 You now have a complete, **three-pillar observability stack** running on Kubernetes:
 
-* 📈 Metrics via **Prometheus**
-* 🪵 Logs via **Loki**
-* 🌐 Traces via **Jaeger**
-* 🧭 Visualized in **Grafana**
+* Metrics via **Prometheus**
+* Logs via **Loki**
+* Traces via **Jaeger**
+* Visualized in **Grafana**
 
 All powered by OpenTelemetry — the glue connecting them.
 
 ---
 
-## ⏭️ What’s Next?
+## What’s Next?
 
 You now have full visibility into your application — but what about the **Kubernetes cluster itself**?
 
-In the **final part** of the series, we’ll expand our observability beyond the app and dive into **cluster-level insights**. This includes monitoring:
+In the [final part](./part-9_otel-gateway-to-observe-k8s-cluster.md) of the series, we’ll expand our observability beyond the app and dive into **cluster-level insights**. This includes monitoring:
 
 * Node and pod CPU/memory usage
 * Kubernetes control plane metrics
 * Scheduler performance, kubelet stats, and more
+
+---
+
+### Missed the previous article?
+
+Check out **[Part 7: Let There Be Logs, Observability’s Final Pillar with Loki](./part-7_logs_with_logi_with_opentelemetry.md)** to see how we got here.
 
 ---
 
