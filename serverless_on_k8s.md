@@ -1,4 +1,4 @@
-# ⚡ Going Serverless on Kubernetes with OpenFaaS
+# Going Serverless on Kubernetes with OpenFaaS
 
 > **Build, ship, and scale functions — on your own Kubernetes cluster.**
 
@@ -20,7 +20,7 @@ Instead of provisioning and scaling servers, you:
 
 **OpenFaaS** (Functions-as-a-Service) is an open-source serverless framework built for Kubernetes and Docker.
 
-### 🔑 Key Features:
+### Key Features:
 
 * Deploy serverless functions in containers
 * CLI, UI, and REST API support
@@ -28,7 +28,7 @@ Instead of provisioning and scaling servers, you:
 * Auto-scaling via function invocation count
 * Supports multiple runtimes (Python, Node.js, Go, Bash, etc.)
 
-### 📦 Serverless on Kubernetes with OpenFaaS:
+### Serverless on Kubernetes with OpenFaaS:
 
 OpenFaaS runs as a set of Kubernetes components:
 
@@ -41,7 +41,7 @@ OpenFaaS runs as a set of Kubernetes components:
 
 [Arkade](https://github.com/alexellis/arkade) is a simple Kubernetes marketplace for installing apps.
 
-### ✅ Prerequisites
+### Prerequisites
 
 * Kubernetes cluster (e.g., `minikube`, `kind`, `k3s`)
 * `kubectl` installed
@@ -51,7 +51,7 @@ OpenFaaS runs as a set of Kubernetes components:
 curl -sLS https://get.arkade.dev | sudo sh
 ```
 
-### 🛠️ Install OpenFaaS:
+### Install OpenFaaS:
 
 ```bash
 arkade install openfaas
@@ -64,7 +64,7 @@ It will:
 
 ## 4. Accessing the OpenFaaS UI
 
-### 🔑 Get admin password:
+### Get admin password:
 
 ```bash
 PASSWORD=$(kubectl get secret -n openfaas basic-auth \
@@ -72,7 +72,7 @@ PASSWORD=$(kubectl get secret -n openfaas basic-auth \
 echo $PASSWORD
 ```
 
-### 🌐 Port-forward the gateway:
+### Port-forward the gateway:
 
 ```bash
 kubectl port-forward -n openfaas svc/gateway 8080:8080
@@ -91,7 +91,7 @@ Login with:
 
 We’ll use the `python3-http` template which supports GET/POST with JSON or plain text input.
 
-### 🔧 Step 1: Install the OpenFaaS CLI
+### Step 1: Install the OpenFaaS CLI
 
 ```bash
 curl -sSL https://cli.openfaas.com | sudo sh
@@ -108,7 +108,7 @@ faas-cli login --username admin --password $PASSWORD
 faas-cli template store pull python3-http
 ```
 
-### 📁 Step 2: Create the function
+### Step 2: Create the function
 
 ```bash
 faas-cli new openfaas-py-fn --lang python3-http
@@ -128,7 +128,7 @@ def handle(event, context):
     }
 ```
 
-### 📄 Step 3: Update `stack.yaml` file
+### Step 3: Update `stack.yaml` file
 ```yaml
 version: 1.0
 provider:
@@ -141,7 +141,7 @@ functions:
     image: <DOCKERHUB_USERNAME>/openfaas-py-fn:1.1
 ```
 
-### 📦 Step 4: Build and Deploy
+### Step 4: Build and Deploy
 ```bash
 faas-cli build -f stack.yaml
 faas-cli push -f stack.yaml
@@ -184,7 +184,7 @@ Now, your function can scale up to 5 replicas during high load.
 
 OpenFaaS installs **Prometheus** by default.
 
-### 📊 Access Prometheus:
+### Access Prometheus:
 
 ```bash
 kubectl port-forward -n openfaas svc/prometheus 9090:9090
@@ -197,7 +197,7 @@ Sample queries:
 * `gateway_function_invocation_total`
 * `gateway_function_invocation_duration_seconds`
 
-### 📈 Grafana for Function Monitoring
+### Grafana for Function Monitoring
 
 You can install Grafana via Arkade:
 
@@ -217,13 +217,13 @@ Login (default: `admin/admin`) and add Prometheus as a data source to create das
 
 [`hey`](https://github.com/rakyll/hey) is a lightweight load-testing tool.
 
-### 🧪 Install hey:
+### Install hey:
 
 ```bash
 go install github.com/rakyll/hey@latest
 ```
 
-### 📌 Test Load:
+### Test Load:
 
 ```bash
 hey -z 10s -c 1 -m POST -d "Load Testing" http://127.0.0.1:8080/function/openfaas-py-fn
@@ -236,7 +236,7 @@ Flags:
 
 ![openfaas-fn-load-testing](./images/openfaas-fn-load-testing.png)
 
-### 📈 Observe Auto-Scaling
+### Observe Auto-Scaling
 
 Check current function replicas:
 
@@ -250,7 +250,7 @@ You can also monitor this behavior live via the **OpenFaaS UI** or **Prometheus*
 
 ---
 
-## 🚀 Final Thoughts
+## Final Thoughts
 
 **OpenFaaS + Kubernetes** brings the best of both worlds:
 
