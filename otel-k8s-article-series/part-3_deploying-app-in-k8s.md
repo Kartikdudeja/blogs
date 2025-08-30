@@ -1,12 +1,12 @@
-# 🔭 OpenTelemetry in Action on Kubernetes: Part 3 - Deploying the Application on Kubernetes
+# OpenTelemetry in Action on Kubernetes: Part 3 - Deploying the Application on Kubernetes
 
-## 🧩 Deploying Our Instrumented ML App to Kubernetes
+## Deploying Our Instrumented ML App to Kubernetes
 
-Welcome to Part 3! If you’ve followed along so far, you now have:
+Welcome to Part 3! If you’ve followed along so far, by the end of [Part 2](./part-2_instrument_and_dockerize_mlapp_python_app.md) you had:
 
-* ✅ A FastAPI-based machine learning app
-* ✅ Instrumented with OpenTelemetry for full-stack observability
-* ✅ Dockerized and ready to ship
+* A FastAPI-based machine learning app
+* Instrumented with OpenTelemetry for full-stack observability
+* Dockerized and ready to ship
 
 Now, it's time to **bring in the big orchestration guns — Kubernetes**.
 
@@ -14,11 +14,11 @@ Now, it's time to **bring in the big orchestration guns — Kubernetes**.
 
 ---
 
-## 🛠️ Understanding Kubernetes Deployment & Service
+## Understanding Kubernetes Deployment & Service
 
 Before we throw YAML at a cluster, let’s understand what these two crucial building blocks do:
 
-### 🔁 **Deployment**
+### **Deployment**
 
 A **Deployment** in Kubernetes manages a set of replicas (identical Pods running our app). It provides:
 
@@ -28,7 +28,7 @@ A **Deployment** in Kubernetes manages a set of replicas (identical Pods running
 
 Think of it as a smart manager for your app's pods.
 
-### 🌐 **Service**
+### **Service**
 
 A **Service** exposes your app inside the cluster (or externally, if needed). It:
 
@@ -41,11 +41,11 @@ A **Service** exposes your app inside the cluster (or externally, if needed). It
 
 ---
 
-## 📄 Kubernetes Manifest Breakdown
+## Kubernetes Manifest Breakdown
 
 Let’s break down the configuration:
 
-### 📦 Deployment: `house-price-service`
+### Deployment: `house-price-service`
 
 ```yaml
 apiVersion: apps/v1
@@ -131,7 +131,7 @@ spec:
             - containerPort: 4317   # OTLP gRPC Port
 ```
 
-### 🌍 Service: `house-price-service`
+### Service: `house-price-service`
 
 ```yaml
 apiVersion: v1
@@ -182,7 +182,7 @@ spec:
 
 Add both in the one file: `house-price-app.yaml`
 
-## 🚀 Deploying with `kubectl`
+## Deploying with `kubectl`
 
 Before deploying the app, let's create a Kubernetes namespace. This helps group related resources together.
 
@@ -214,7 +214,7 @@ To view the exposed service:
 kubectl -n mlapp get svc -l app=house-price-service
 ```
 
-## 🧪 Testing the App in Kubernetes
+## Testing the App in Kubernetes
 
 Get the Endpoint IP from the K8s service:
 ```bash
@@ -237,9 +237,9 @@ You should get a prediction response like:
 
 And voilà — telemetry data is flowing.
 
-## 🔮 What’s Next: Meet the OpenTelemetry Collector
+## What’s Next: Meet the OpenTelemetry Collector
 
-In **Part 4**, we’ll introduce the **OpenTelemetry Collector Agent**:
+In [Part 4](./part-4_otel-collector-ds-agent-in-k8s.md), we’ll introduce the **OpenTelemetry Collector Agent**:
 
 * Deploy it as a DaemonSet alongside your app
 * Configure it to collect traces, metrics, and logs
