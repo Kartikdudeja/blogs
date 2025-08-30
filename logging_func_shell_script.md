@@ -1,4 +1,4 @@
-# 🛠️ Logging Like a Pro: A Simple Yet Powerful Logger Function for Your Shell Scripts
+# Logging Like a Pro: A Simple Yet Powerful Logger Function for Your Shell Scripts
 
 > *“Great logs don't just tell you what went wrong — they help you understand why it happened.”*
 
@@ -15,7 +15,7 @@ This post walks you through a compact, reusable logger function for your shell s
 - Automatically timestamps log entries
 - Writes to a dedicated log file
 
-## 📝 The Logger Function: A Quick Glance
+## The Logger Function: A Quick Glance
 
 Here’s the complete snippet of the logger function:
 
@@ -69,7 +69,7 @@ logger "INFO" "Script Completed."
 
 ```
 
-> 💡 **Pro Tip**: You can also wrap this into your CI/CD pipelines or cron jobs to get insights into when and why things run (or crash).
+> **Pro Tip**: You can also wrap this into your CI/CD pipelines or cron jobs to get insights into when and why things run (or crash).
 
 ## Why It’s Cool
 
@@ -90,7 +90,7 @@ Simple, clear, and human-readable — exactly what you want when you're troubles
 
 ---
 
-## ✍️ Final Thoughts
+## Final Thoughts
 
 Scripting isn't just about writing commands. It's about writing them smartly. By building in a logger function like this, you add **observability** to your scripts — and in the world of DevOps and automation, that's gold.
 
