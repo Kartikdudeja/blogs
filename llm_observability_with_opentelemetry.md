@@ -463,7 +463,7 @@ For an LLM RAG pipeline, the key metrics are:
    * Shows efficiency of prompts and cost correlation.
 
 4. **Cost Estimation**
-   * Approximates \$\$ cost based on tokens and model pricing.
+   * Approximates $$ cost based on tokens and model pricing.
    * Useful for **FinOps** and controlling LLM usage bills.
 
 #### OTel Metrics Instrumentation
@@ -992,7 +992,7 @@ With this setup, you now have **end-to-end observability for your RAG applicatio
 ## How This Improves Observability
 
 * **Latency analysis**: Traces show whether slow responses are due to retrieval or LLM generation.
-* **Cost tracking**: Token counts let you estimate \$ spend directly from traces.
+* **Cost tracking**: Token counts let you estimate $ spend directly from traces.
 * **Debugging hallucinations**: Seeing prompts + responses helps you identify if poor answers came from bad retrieval or bad generation.
 * **Model governance**: Attributes like `model`, `temperature`, `top_p` let you correlate behavior with configuration.
 
